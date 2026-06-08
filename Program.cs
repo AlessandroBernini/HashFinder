@@ -40,7 +40,7 @@ class Program
         // 1. Top passwords
         RunHashcat($"{mode} -a 0 {hashFile} {wordlist}");
 
-        // 2. Top + rules
+        // 2. Top passwords + rules
         RunHashcat($"{mode} -a 0 {hashFile} {wordlist} -r {rulesFile}");
 
         // 3. Hybrid leggero
@@ -71,17 +71,15 @@ class Program
             Console.WriteLine("Scarico rules...");
             Directory.CreateDirectory("rules");
             DownloadFile(
-                "https://raw.githubusercontent.com/hashcat/hashcat/master/rules/best64.rule",
+                "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/refs/heads/master/OneRuleToRuleThemAll.rule",
                 rulesFile);
         }
     }
 
     static void DownloadFile(string url, string output)
     {
-        using (WebClient client = new WebClient())
-        {
-            client.DownloadFile(url, output);
-        }
+        using WebClient client = new();
+        client.DownloadFile(url, output);
     }
 
     // ✅ HASH DETECTION
